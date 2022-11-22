@@ -1,4 +1,10 @@
 <?php
-echo "Hello world!";
+include("include.php");
+
+$db = new DatabaseExecutor();
+
+$db -> test();
+
+$db-> close();
 
 ?>
