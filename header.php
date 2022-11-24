@@ -1,4 +1,4 @@
-<?php 
+<?php session_start();
 //costanti
 $sndrowtr = "#d3d3d3"; //colore seconda riga tabella
 ?>

@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Classe da estendere a tutte le classi di tipo DAO. Contiene tutte le funzioni utili per l'interfacciamento automatico al database.
+ * 
+ * @author FrancescoCeliento
+ *
+ */
 class BaseDAO {
     
     // necessita di override
@@ -11,54 +16,85 @@ class BaseDAO {
     function getDO() {
         return null;
     }
-    
-    function getFieldsArray() {
-        return array_keys(get_object_vars($this));
-    }
-    
-    function getFieldsString() {
-        $arraykeys = $this->getFieldsArray();
+      
+    /**
+     * Formatta la query con tutti i campi e la tabella utile per eseguire una SELECT ALL.
+     * 
+     * @return String
+     * @author FrancescoCeliento
+     */
+    function getSelectAllQuery() {
+        //$objectDO = $this->getDO();
         
-        $icount = 0;
-        foreach ($arraykeys as $key) {
-            if ($icount == 0)
-                $result=$key;
-                else
-                    $result.= ",".$key;
-                    
-                    $icount++;
-        }
-        
-        return $result;
-    }
-    
-    function getQuery() {
         $result = "SELECT ";
-        $result.= $this->getFieldsString();
+        $result.= ($this->getDO())->getFieldsString();
         $result.= " FROM ";
         $result.= $this->getTable();
         
         return $result;
     }
     
-    function getAll() {
-        $query = $this->getQuery();
-        
+    /**
+     * La funzione esegue una select all di tutti i valori di una query.
+     * 
+     * Inserendo un parametro di tipo DatabaseExecutor il metodo non chiude la connessione dopo la sua esecuzione, in quanto si aspetta venga chiusa esternamente.
+     * Se la transazione deve essere unica, il parametro $db non deve essere passato.
+     * 
+     * @param DatabaseExecutor $db
+     * @return BaseDO instance
+     * @author FrancescoCeliento
+     */
+    function getAll($db = null) {
+        $query = $this->getSelectAllQuery();
+        //TODO: Gestire l'esecuzione della query, per ora è solo un test
+        return $query;
     }
     
-    function getByKey($chiave, $valore) {
-        $query = $this->getQuery();
+    /**
+     * Inserendo un parametro di tipo DatabaseExecutor il metodo non chiude la connessione dopo la sua esecuzione, in quanto si aspetta venga chiusa esternamente.
+     * Se la transazione deve essere unica, il parametro $db non deve essere passato.
+     * 
+     * @param String $chiave
+     * @param String $valore
+     * @param DatabaseExecutor $db
+     * @return BaseDO instance
+     * @author FrancescoCeliento
+     */
+    function getBySingleCondition($chiave, $valore, $db = null) {
+        $query = $this->getSelectAllQuery();
         $query.= " WHERE ";
         $query.=$chiave."='".$valore."'";
         
         return $query;
     }
     
-    function save() {
+    /**
+     * Inserendo un parametro di tipo DatabaseExecutor il metodo non chiude la connessione dopo la sua esecuzione, in quanto si aspetta venga chiusa esternamente.
+     * Se la transazione deve essere unica, il parametro $db non deve essere passato.
+     * 
+     * @param Array $map
+     * @param DatabaseExecutor $db
+     * @return BaseDO
+     * @author FrancescoCeliento
+     */
+    function getByMapConditions($map, $db = null) {
         
     }
     
-    function delete() {
+    /**
+     * Si occupa di eseguire l'insert o l'update in base alla già presenza di una riga valida che rispetta le colonne indicate nella getUniqueKey() dell'oggetto DO. Se esiste una riga con le colonne specificate e dtdelete=null, allora storicizza la vecchia riga prima di inserire la nuova.
+     * 
+     * Inserendo un parametro di tipo DatabaseExecutor il metodo non chiude la connessione dopo la sua esecuzione, in quanto si aspetta venga chiusa esternamente.
+     * Se la transazione deve essere unica, il parametro $db non deve essere passato.
+     * 
+     * @param DatabaseExecutor $db
+     * @author FrancescoCeliento
+     */
+    function save($db = null) {
+        
+    }
+    
+    function delete($db = null) {
         
     }
     

@@ -2,10 +2,6 @@
 
 class ParametroDAO extends BaseDAO {
     
-    public $chiave;
-    public $valore;
-    public $visibile;
-    
     function getTable() {
         return "parametri";
     }
