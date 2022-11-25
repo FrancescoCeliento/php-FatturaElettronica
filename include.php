@@ -1,4 +1,4 @@
-<?php
+<?php session_start();
 $classdir = "classes";
 
 $scandir = scandir($classdir."/");
@@ -20,5 +20,6 @@ foreach ($scandir as $subdir) {
 
 
 $actionUtils = new ActionUtils();
+$sessione = new SessioneDO(session_id());
 
 ?>

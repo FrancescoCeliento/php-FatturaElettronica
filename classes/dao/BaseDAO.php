@@ -60,12 +60,28 @@ class BaseDAO {
      * @return BaseDO instance
      * @author FrancescoCeliento
      */
-    function getBySingleCondition($chiave, $valore, $db = null) {
+    function getDOBySingleCondition($chiave, $valore, $externaldb = null) {
+        
+        $do = $this->getDO();
+        
+        if ($externaldb==null) {
+            $db = new DatabaseExecutor();
+        } else {
+            $db = $externaldb;
+        }
+        
         $query = $this->getSelectAllQuery();
         $query.= " WHERE ";
         $query.=$chiave."='".$valore."'";
         
-        return $query;
+        $resultset = $db -> querySingle($query, true);
+        
+        if ($externaldb==null) {
+            $db->close();
+        }
+        
+        return $do->bind($resultset);
+        
     }
     
     /**

@@ -5,58 +5,66 @@ class SessioneDO extends BaseDO {
     public $sessionid;
     public $idutente;
     public $username;
+    public $nome;
     public $sessionexpire;
     
-    private const prefixSession = 'php-fattelett-';
-    private const sessionTimeout = prefixSession.'timeout';
-    private const sessionId = prefixSession.'id';
-    private const sessionUsername = prefixSession.'username';
-    private const sessionIdUtente = prefixSession.'idutente';
+    public $autenticato;
     
-    
-    function checkSession($sessionid) {
-        $redirecttologin = false;
-        $timeout = 30 * 60; //TODO mappare da qualche parte questo parametro
+    function __construct($sessionid=null) {
         
-        $query = ""; //TODO Query per la lettura dell'ultima sessione attiva
-        $sessionsaved = "";
+        if ($sessionid!=null) {
         
-        /*
-        
-        
-        
-        
-        if(isset($_SESSION[sessionTimeout])) {
-            $duration = time() - (int)$_SESSION[sessionTimeout];
-            if($duration > $timeout) {
-                session_destroy();
-                session_start();
-                //recupera messaggio di sessione scaduta
-                $redirecttologin=true;
-            } else if ($sessionidsaved != $IDsession) {
-                // controllo che la sessione appartenga all'utente in uso
-                session_destroy();
-                session_start();
-                //recupera messaggio di sessione in uso da altro utente
-                $redirecttologin=true;
-            }
-        } else  {
-            $redirecttologin=true;
+            $this->autenticato = false;
+            $this->sessionid = $sessionid;
+                    
+            // Se la sessione esiste ed è valida, procede
+            if (   isset($_SESSION['sessionid'])
+                && isset($_SESSION['idutente'])
+                && isset($_SESSION['username'])
+                && isset($_SESSION['nome'])
+                && $_SESSION['sessionid'] == $sessionid) {
+                    
+                    $this->autenticato = true;
+                    
+                    $this->idutente  = $_SESSION['idutente'];
+                    $this->username  = $_SESSION['username'];
+                    $this->nome      = $_SESSION['nome'];
+                }
+                
+                // altrimenti distruggi la sessione rimandi al main con messaggio warning
+                else {
+                    session_destroy();
+                    session_start();
+                    
+                    /*$actionUtils = new ActionUtils();
+                    $actionUtils->setWarning("È necessario eseguire la login per accedere al servizio");
+                    $actionUtils->goView('main');*/
+                }
+                
+                if ($this->autenticato && isset($_GET['view']) && ($_GET['view']=='login')) {
+                    echo "Sei già stato autenticato";
+                    /*$actionUtils = new ActionUtils();
+                     $actionUtils->goView('main');*/
+                }
         }
-        
-        if ($_SERVER['PHP_SELF']!=leggi_parametro('software.login.selfpage')) {
-            if ($redirecttologin) {
-                header("location: login.php");
-            } else {
-                $_SESSION['timeout'] = time();
-            }
-        }*/
+    
     }
     
     function save() {
-        $_SESSION[sessionId] = $this->sessionid;
-        $_SESSION[sessionUsername] = $this->username;
-        $_SESSION[sessionIdUtente] = $this->idutente;
+        
+        $_SESSION['sessionid'] = $this->sessionid;
+        $_SESSION['idutente'] = $this->idutente;
+        $_SESSION['username'] = $this->username;
+        $_SESSION['nome'] = $this->nome;
+    }
+    
+    function logout() {
+        session_destroy();
+        session_start();
+        
+        $actionUtils = new ActionUtils();
+        $actionUtils->setInfo('Logout avvenuto correttamente');
+        $actionUtils->goView('main');
     }
     
 }

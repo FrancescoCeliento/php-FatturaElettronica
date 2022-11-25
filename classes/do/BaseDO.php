@@ -6,6 +6,10 @@
  */
 class BaseDO {
     
+    function getFields() {
+        return get_object_vars($this);
+    }
+    
     /**
      * Ritorna un array contenente tutte le colonne mappate nel DO
      * 
@@ -38,6 +42,19 @@ class BaseDO {
         
         return $result;
     }
+    
+    function bind($array) {
+        $doFields = $this->getFields();
+        
+        foreach (array_keys($array) as $key) {
+            
+            if (array_key_exists($key,$doFields)) {
+                $this->{$key} = $array[$key];
+            }
+        }
+        return $this;
+    }
+    
 }
 
 ?>

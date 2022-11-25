@@ -10,8 +10,10 @@ $db-> close();*/
 
 // test lettura campi
 
-$parametro = new ParametroDAO();
+$parametro = new ParametroDO();
 
-echo $parametro->getByKey("chiave", "ciao");
+$parametro->{'chiave'} = 'ciao';
+
+echo $parametro->chiave;
 
 ?>
