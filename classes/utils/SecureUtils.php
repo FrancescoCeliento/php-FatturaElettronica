@@ -35,7 +35,7 @@ class SecureUtils {
         for ($i = 0; $i < $esp; $i++)
             $result .= $characters[mt_rand(0, strlen($characters)-1)];
             
-            echo $result;
+        return $result;
     }
     
     function newKeysalt() {

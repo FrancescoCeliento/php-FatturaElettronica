@@ -10,7 +10,7 @@
 		<tr>
 			<td>Password</td>
 			<td>
-				<input name="password" size="26" type="password"/>
+				<input name="password" size="25" type="password"/>
 			</td>
 		</tr>
 		<tr>
@@ -20,6 +20,5 @@
 		</tr>
 	</table>
 	
-	<p align="center">L'inserimento di una utenza errata prevede il giro attraverso un circuito pubblicitario per evitare sovraccarichi per flood.</p>
-	<p align="center">La sessione viene memorizzata per 30 minuti, a meno che non si effettui la connessione da un'altra postazione.</p>
+	<p align="center">La sessione viene memorizzata per 24 minuti, a meno che non si effettui la connessione da un'altra postazione.</p>
 </form>

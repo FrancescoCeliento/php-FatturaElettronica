@@ -29,7 +29,7 @@ class ActionUtils {
     }
     
     function resolve($action, $destination, $errorpage='') {
-        $result = "actionExecutor.php?action=".$action."&doneView=".urlencode($destination)."&errorView=".urlencode($errorpage);
+        $result = "actionExecutor.php?action=".urlencode($action)."&doneView=".urlencode($destination)."&errorView=".urlencode($errorpage);
         return $result;
     }
     

@@ -6,9 +6,21 @@ class UtenteDO extends BaseDO {
     public $nome;
     public $email;
     public $admin;
-    public $dtultimoaccesso;
-    public $dtinsert;
-    public $dtdelete;
+
+    function getKey() {
+        return 'idutente';
+    }
+    
+    function isAdmin() {
+        return ($this->admin==1);
+    }
+    
+    function isAdminString() {
+        if ($this->admin==1)
+            return "SI";
+            else
+                return "NO";
+    }
 }
 
 ?>

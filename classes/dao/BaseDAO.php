@@ -34,6 +34,17 @@ class BaseDAO {
         return $result;
     }
     
+    function getStoricizeRowQuery() {
+        $dateUtil = new DateUtils();
+        
+        
+        $result = "UPDATE ";
+        $result.= $this->getTable();
+        $result.= " SET dtdelete = ";
+        $result.= "'".$dateUtil->getTodayToString()."'";
+        
+        return $result;
+    }
     /**
      * La funzione esegue una select all di tutti i valori di una query.
      * 
@@ -44,10 +55,30 @@ class BaseDAO {
      * @return BaseDO instance
      * @author FrancescoCeliento
      */
-    function getAll($db = null) {
-        $query = $this->getSelectAllQuery();
-        //TODO: Gestire l'esecuzione della query, per ora è solo un test
-        return $query;
+    function getAllValid($externaldb = null) {
+        if ($externaldb==null) {
+            $db = new DatabaseExecutor();
+        } else {
+            $db = $externaldb;
+        }
+        
+        $query = $this->getSelectAllQuery()." WHERE dtdelete IS NULL";
+        $results = $db->query($query);
+        
+        $doList = [];
+        $doType = $this->getDO();
+        
+        while($row = $results->fetchArray(SQLITE3_ASSOC)) {
+            $do = ($this->getDO())->bind($row);
+            
+            array_push($doList, $do);
+        }
+        
+        if ($externaldb==null) {
+            $db->close();
+        }
+        
+        return $doList;
     }
     
     /**
@@ -73,6 +104,7 @@ class BaseDAO {
         $query = $this->getSelectAllQuery();
         $query.= " WHERE ";
         $query.=$chiave."='".$valore."'";
+        $query.=" AND dtdelete IS NULL";
         
         $resultset = $db -> querySingle($query, true);
         
@@ -106,12 +138,70 @@ class BaseDAO {
      * @param DatabaseExecutor $db
      * @author FrancescoCeliento
      */
-    function save($db = null) {
+    function save($objDO, $externaldb = null) {
+        if ($externaldb==null) {
+            $db = new DatabaseExecutor();
+        } else {
+            $db = $externaldb;
+        }
+        
+        $this->delete($objDO, $db);
+            
+        $insertQuery = "INSERT INTO ".$this->getTable()." (".$objDO->getFieldsString().") ";
+        $insertQuery.= "VALUES (";
+        
+        $icount = 0;
+        foreach ($objDO->getFieldsArray() as $field) {
+            if ($field=='dtinsert') {
+                $dateutil = new DateUtils();
+                $valueCell = $dateutil->getTodayToString();
+                
+            } else {
+                $valueCell = $objDO->{$field};
+            }
+            
+            if ($icount==0) {
+                $insertQuery.= "'".$valueCell."'";
+                
+            } else {
+                $insertQuery.=", '".$valueCell."'";
+                
+            }
+            $icount++;
+        }
+        $insertQuery.= ");";
+        
+        //echo $insertQuery;
+        
+        $result = $db->exec($insertQuery);
+        
+        if ($externaldb==null) {
+            $db->close();
+        }
+        
+        return $result;
         
     }
     
-    function delete($db = null) {
+    function delete($objDO, $externaldb = null) {
+        if ($externaldb==null) {
+            $db = new DatabaseExecutor();
+        } else {
+            $db = $externaldb;
+        }
         
+        $updateQuery = $this->getStoricizeRowQuery();
+        $keyDO = $objDO->getKey();
+        
+        $updateQuery.= " WHERE ".$keyDO." = ".$objDO->{$keyDO}." AND dtdelete IS NULL;";
+        
+        $result = $db->exec($updateQuery);
+        
+        if ($externaldb==null) {
+            $db->close();
+        }
+        
+        return $result;
     }
     
 }

@@ -5,8 +5,10 @@ class PasswordDO extends BaseDO {
     public $password;
     public $salt;
     public $keysalt;
-    public $dtinsert;
-    public $dtdelete;
+    
+    function getKey() {
+        return 'idutente';
+    }
 }
 
 ?>

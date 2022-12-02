@@ -14,7 +14,20 @@ $sndrowtr = "#d3d3d3"; //colore seconda riga tabella
 <div style="border: 2px solid; border-radius: 15px; padding: 15px 15px 15px 15px;" align="center">
 	<?php 
 	foreach (MenuEnum::$menuList as $view=>$label) {
-	    echo '<a href="'.$actionUtils->resolveView($view).'">'.$label.'</a>';
+	    echo '<a href="'.$actionUtils->resolveView($view).'">'.$label.'</a> ';
+	}
+	?>
+	
+	<?php
+	if (isset($sessione->isadmin) && $sessione->isadmin) {
+    	$icount=0;
+    	foreach (MenuAdminEnum::$menuList as $view=>$label) {
+    	    if($icount==0)
+    	        echo "| ";
+    	        
+    	    echo '<a href="'.$actionUtils->resolveView($view).'">'.$label.'</a> ';
+    	    $icount++;
+    	}
 	}
 	?>
 </div>
@@ -22,7 +35,7 @@ $sndrowtr = "#d3d3d3"; //colore seconda riga tabella
 <?php } ?>
 
 <div style="border: 2px solid; border-radius: 15px; padding: 15px 15px 15px 15px;">
-<div align="right">
+<div align="right" style="margin-bottom:1em;">
 	<?php
 	if ($sessione->autenticato) {
 	    echo 'Ciao <b>'.$sessione->nome.'</b> (<a href="'.$actionUtils->resolve('auth/logoutAction','main').'">esci</a>)';

@@ -6,7 +6,7 @@ doc: https://www.php.net/manual/en/sqlite3.query.php
 
 class DatabaseExecutor extends SQLite3 {
     
-    public $dbfile = "database/sqlite.db";
+    public $dbfile = "database/data.db";
         
     function __construct() {
         
@@ -16,7 +16,8 @@ class DatabaseExecutor extends SQLite3 {
         if(!file_exists($this->dbfile))
             die ($this->dbfile." is not exists");
         
-        $this->open($this->dbfile);
+            $this->open($this->dbfile);
+            
     }
     
     function test() {
@@ -26,6 +27,7 @@ class DatabaseExecutor extends SQLite3 {
         
         echo $username;
     }
+    
 }
 
 ?>

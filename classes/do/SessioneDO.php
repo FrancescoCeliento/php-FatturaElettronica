@@ -6,6 +6,7 @@ class SessioneDO extends BaseDO {
     public $idutente;
     public $username;
     public $nome;
+    public $isadmin;
     public $sessionexpire;
     
     public $autenticato;
@@ -22,6 +23,7 @@ class SessioneDO extends BaseDO {
                 && isset($_SESSION['idutente'])
                 && isset($_SESSION['username'])
                 && isset($_SESSION['nome'])
+                && isset($_SESSION['isadmin'])
                 && $_SESSION['sessionid'] == $sessionid) {
                     
                     $this->autenticato = true;
@@ -29,6 +31,7 @@ class SessioneDO extends BaseDO {
                     $this->idutente  = $_SESSION['idutente'];
                     $this->username  = $_SESSION['username'];
                     $this->nome      = $_SESSION['nome'];
+                    $this->isadmin   = $_SESSION['isadmin'];
                 }
                 
                 // altrimenti distruggi la sessione rimandi al main con messaggio warning
@@ -56,6 +59,7 @@ class SessioneDO extends BaseDO {
         $_SESSION['idutente'] = $this->idutente;
         $_SESSION['username'] = $this->username;
         $_SESSION['nome'] = $this->nome;
+        $_SESSION['isadmin'] = $this->isadmin;
     }
     
     function logout() {

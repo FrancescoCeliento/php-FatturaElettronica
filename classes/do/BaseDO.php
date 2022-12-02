@@ -6,6 +6,12 @@
  */
 class BaseDO {
     
+    public $dtinsert;
+    
+    function getKey() {
+        return null;
+    }
+    
     function getFields() {
         return get_object_vars($this);
     }
