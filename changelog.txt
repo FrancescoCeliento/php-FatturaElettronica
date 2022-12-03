@@ -1,0 +1,4 @@
+==== 0.0.4 (nightly)
+- Introdotto changelog
+- Sostituito il template con https://simplecss.org
+- Sitemati i form per un migliore utilizzo da mobile

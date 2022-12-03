@@ -1,3 +1,5 @@
-</div>
-</br>
-<div style="border: 2px solid; border-radius: 15px; background-color:palegreen; padding: 15px 15px 15px 15px;" align="right">php-FatturaElettronica - v<?php include('version.txt');?></div>
+<footer>
+    <p>v<?php include('version.txt');?> - <a href="changelog.txt">changelog</a></p>
+</footer>
+
+</body>
