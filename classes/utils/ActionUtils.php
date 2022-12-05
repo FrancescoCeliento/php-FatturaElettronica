@@ -34,7 +34,17 @@ class ActionUtils {
     }
     
     function resolveView($view) {
-        $result = "?view=".urlencode($view);
+        if (strpos($view,  '?') !== false) {
+            // Se contiene il carattere ? significa che sta passando dei parametri nella GET, quindi devo splittare la stringa
+            $splitView = explode('?',$view);
+            
+            $result = "?view=".urlencode($splitView[0])."&".$splitView[1];
+            
+        } else {
+            //Se non contiene nessun carattere ? significa che si tratta di un url pulito e quindi tratto la stringa così com'è
+            $result = "?view=".urlencode($view);        
+        }
+        
         return $result;
     }
     

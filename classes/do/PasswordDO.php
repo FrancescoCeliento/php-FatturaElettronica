@@ -5,6 +5,7 @@ class PasswordDO extends BaseDO {
     public $password;
     public $salt;
     public $keysalt;
+    public $idutentemodifica;
     
     function getKey() {
         return 'idutente';

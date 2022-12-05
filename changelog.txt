@@ -1,4 +1,13 @@
-==== 0.0.4 (nightly)
-- Introdotto changelog
-- Sostituito il template con https://simplecss.org
-- Sitemati i form per un migliore utilizzo da mobile
+==== 0.0.5
+- Sostituite icone con button nella pagina della lista degli utenti
+- Aggiunto ID dell'utente nella lista degli utenti
+- Creazione di un nuovo utente in una pagina a parte
+- Preparata lettura dei dati per la modifica del singolo utente da pannello di amministrazione
+- Inserito controllo sulla sessione quando si cerca di visualizzare la pagina di login dopo essersi autenticati
+- Sistemata descrizione nella pagina principale
+- Sostituito link del changelog nel footer con quello del branch dev in GitHub
+- Aggiunto nel footer il link al mio profilo Ko-Fi per le donazioni
+- Aggiunto riferimento id utente per ogni modifica nel database
+- Implementata modifica di un utente dal pannello di amministrazione
+- Implementato controllo per evitare l'eliminazione di un utente amministratore
+- Implementata eliminazione dell'utente

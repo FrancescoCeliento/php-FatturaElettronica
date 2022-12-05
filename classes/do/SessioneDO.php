@@ -45,9 +45,9 @@ class SessioneDO extends BaseDO {
                 }
                 
                 if ($this->autenticato && isset($_GET['view']) && ($_GET['view']=='login')) {
-                    echo "Sei già stato autenticato";
-                    /*$actionUtils = new ActionUtils();
-                     $actionUtils->goView('main');*/
+                    $actionUtils = new ActionUtils();
+                    $actionUtils->setInfo("Risulti gi&agrave; autenticato, non hai bisogno di farlo di nuovo");
+                    $actionUtils->goView('main');
                 }
         }
     

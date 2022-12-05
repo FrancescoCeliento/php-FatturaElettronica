@@ -6,6 +6,7 @@ class UtenteDO extends BaseDO {
     public $nome;
     public $email;
     public $admin;
+    public $idutentemodifica;
 
     function getKey() {
         return 'idutente';

@@ -15,14 +15,13 @@ if ($newpassword <> $rptpassword) {
 } else {
     $secureUtils = new SecureUtils();
     
-    $salt = $secureUtils->newSalt();
-    $keysalt = $secureUtils->newKeysalt();
-    
     $newPasswordDO = new PasswordDO();
     $newPasswordDO->idutente = $sessione->idutente;
-    $newPasswordDO->password = $secureUtils->cryptPassword($newpassword, $salt, $keysalt);
-    $newPasswordDO->salt = $salt;
-    $newPasswordDO->keysalt = $keysalt;
+    $newPasswordDO->salt = $secureUtils->newSalt();
+    $newPasswordDO->keysalt = $secureUtils->newKeysalt();
+    $newPasswordDO->password = $secureUtils->cryptPassword($newpassword, $newPasswordDO->salt, $newPasswordDO->keysalt);
+    $newPasswordDO->idutentemodifica = $sessione->idutente;
+    
     
     if ($passwordDAO->save($newPasswordDO)) {
         $actionUtils->setInfo("Password cambiata correttamente");
