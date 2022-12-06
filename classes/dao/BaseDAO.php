@@ -91,7 +91,7 @@ class BaseDAO {
      * @return BaseDO instance
      * @author FrancescoCeliento
      */
-    function getDOBySingleCondition($chiave, $valore, $externaldb = null) {
+    function getDOBySingleCondition($chiave = null, $valore = null, $externaldb = null) {
         
         $do = $this->getDO();
         
@@ -102,9 +102,11 @@ class BaseDAO {
         }
         
         $query = $this->getSelectAllQuery();
-        $query.= " WHERE ";
-        $query.=$chiave."='".$valore."'";
-        $query.=" AND dtdelete IS NULL";
+        $query.= " WHERE dtdelete IS NULL";
+        
+        if ($chiave!=null && $valore!=null) {
+            $query.=" AND ".$chiave."='".$valore."'";            
+        }
         
         $resultset = $db -> querySingle($query, true);
         
@@ -191,9 +193,14 @@ class BaseDAO {
         }
         
         $updateQuery = $this->getStoricizeRowQuery();
-        $keyDO = $objDO->getKey();
         
-        $updateQuery.= " WHERE ".$keyDO." = ".$objDO->{$keyDO}." AND dtdelete IS NULL;";
+        $updateQuery.= " WHERE dtdelete IS NULL";
+       
+        foreach ($objDO->getKey() as $keyDO) {
+            $updateQuery.= " AND ".$keyDO." = ".$objDO->{$keyDO};
+        }
+        
+        $updateQuery.= ";";
         
         $result = $db->exec($updateQuery);
         

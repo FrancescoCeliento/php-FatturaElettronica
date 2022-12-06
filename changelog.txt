@@ -1,3 +1,13 @@
+==== 0.0.6
+- Implementata gestione delle chiavi multicolonne
+- Implementata pagina visualizzazione dati azienda
+- Inserito pulsante Clienti
+- Inserito pulsante Articoli
+- Inserito pulsante Documenti di trasporto
+- Inserito pulsante Fatture
+- Implementata modifica informazioni dell'azienda
+- Creata tabella Clienti
+
 ==== 0.0.5
 - Sostituite icone con button nella pagina della lista degli utenti
 - Aggiunto ID dell'utente nella lista degli utenti

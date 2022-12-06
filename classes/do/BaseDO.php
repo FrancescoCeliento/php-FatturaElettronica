@@ -9,7 +9,7 @@ class BaseDO {
     public $dtinsert;
     
     function getKey() {
-        return null;
+        return [];
     }
     
     function getFields() {

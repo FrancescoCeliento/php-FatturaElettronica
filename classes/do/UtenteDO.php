@@ -9,7 +9,7 @@ class UtenteDO extends BaseDO {
     public $idutentemodifica;
 
     function getKey() {
-        return 'idutente';
+        return ['idutente'];
     }
     
     function isAdmin() {

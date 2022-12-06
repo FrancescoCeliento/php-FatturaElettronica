@@ -8,7 +8,7 @@ class PasswordDO extends BaseDO {
     public $idutentemodifica;
     
     function getKey() {
-        return 'idutente';
+        return ['idutente'];
     }
 }
 
