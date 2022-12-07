@@ -1,3 +1,11 @@
+==== 0.0.7
+- Implementato inserimento nuovo cliente
+- Implementata la lista dei clienti inseriti
+- Completata la gestione dei clienti (lista, dettaglio, modifica, eliminazione)
+- Configurata tabella articoli
+- Integrato fontawesome 6.2.1
+- Sostituite icone nella pulsantiera
+
 ==== 0.0.6
 - Implementata gestione delle chiavi multicolonne
 - Implementata pagina visualizzazione dati azienda

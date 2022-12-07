@@ -29,11 +29,11 @@ $db = new DatabaseExecutor();
     
 // Salvo il nuovo utente
 if ($utenteDAO->save($utenteDO,$db) && $passwordDAO->save($passwordDO,$db)) {
-    $actionUtils->setInfo("Nuovo utente inserito correttamente");
+    $actionUtils->setInfo("Nuovo utente creato correttamente");
     $actionUtils->goView($doneView);
     
 } else {
-    $actionUtils->setError("Errore nella creazione del nuovo utente");
+    $actionUtils->setError("Errore durante la creazione del nuovo utente");
     $actionUtils->goView($errorView);
 }
 

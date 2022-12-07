@@ -147,7 +147,8 @@ class BaseDAO {
             $db = $externaldb;
         }
         
-        $this->delete($objDO, $db);
+        if (!$this->delete($objDO, $db))
+            return false;
             
         $insertQuery = "INSERT INTO ".$this->getTable()." (".$objDO->getFieldsString().") ";
         $insertQuery.= "VALUES (";
@@ -197,10 +198,11 @@ class BaseDAO {
         $updateQuery.= " WHERE dtdelete IS NULL";
        
         foreach ($objDO->getKey() as $keyDO) {
-            $updateQuery.= " AND ".$keyDO." = ".$objDO->{$keyDO};
+            $updateQuery.= " AND ".$keyDO." = '".$objDO->{$keyDO}."'";
         }
         
         $updateQuery.= ";";
+        echo $updateQuery;
         
         $result = $db->exec($updateQuery);
         
